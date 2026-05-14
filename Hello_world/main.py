@@ -1,30 +1,16 @@
+from dotenv import load_dotenv
+from openai import OpenAI
 
-# import google.generativeai as genai
+load_dotenv()
 
-# genai.configure(api_key="AIzaSyCCFpT4t8CS7Yal2sXTF3bvyzNfehs7BnU")
+client = OpenAI()
 
-# model = genai.GenerativeModel("gemini-1.5-flash")
-# chat = model.start_chat(history=[])
-# response = chat.send_message("Explain to me how AI works")
-# print(response.text)
+response = client.chat.completions.create(
+    model="gpt-3.5-turbo",  # or "gpt-4" if you have access
+    messages=[
+        {"role": "system", "content": "You are an expert in writing maths problems and only and only maths related questions."},
+        {"role": "user", "content": "hey can you help me to solve a +b whole square."}
+    ]
+)
 
-# client = genai.client("api_key=AIzaSyCCFpT4t8CS7Yal2sXTF3bvyzNfehs7BnU")
-# response = client.chat.completions.create(
-#     model="gemini-2.5-flash",
-#     messages=[
-#         {"role": "user", "content": "Explain to me how AI in few works"}
-#     ]
-# )
-
-
-# from google import genai
-
-# # The client gets the API key from the environment variable `GEMINI_API_KEY`.
-# client = genai.Client()
-
-# response = client.models.generate_content(
-#     model="gemini-2.5-flash", contents="Explain how AI works in a few words"
-# )
-# print(response.text)
-
-
+print(response.choices[0].message.content)
